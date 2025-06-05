@@ -109,7 +109,7 @@ const vineLucid = function <M extends LucidModel>(
     _.isUndefined
   )
 
-  const modelKeys: string[] = (model as any).keys || []
+  const modelKeys: string[] = [model.primaryKey]
 
   // Exclude
   const excludes: string[] = options?.update ? (model as any).excludeUpdate : []
