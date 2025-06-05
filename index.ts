@@ -8,6 +8,6 @@
  */
 
 export * from './src/enabled_relations.js'
-export * from './src/helpers.js'
+export * from './src/helpers/index.js'
 export * from './src/vine_lucid.js'
 export { VineModel } from './src/vine_model.js'

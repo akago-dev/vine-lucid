@@ -1,17 +1,17 @@
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { test } from '@japa/runner'
 import vine from '@vinejs/vine'
-import { VineModel, assertVineEquals } from '../../../index.js'
+import { VineModel } from '../../../index.js'
 import { ClassFields } from '../base.js'
 
-test('Nominal case', async () => {
+test('Nominal case', async ({ assert }) => {
   class ClassA extends BaseModel {
     @VineModel(vine.string())
     @column()
     declare fieldA: string
   }
 
-  assertVineEquals(
+  assert.vineEquals(
     vine.lucid(ClassA),
     vine.object({
       fieldA: vine.string(),
@@ -19,7 +19,7 @@ test('Nominal case', async () => {
   )
 })
 
-test('Optional', async () => {
+test('Optional', async ({ assert }) => {
   class ClassA extends BaseModel {
     @VineModel(vine.string())
     @column()
@@ -30,7 +30,7 @@ test('Optional', async () => {
     declare fieldB: number | undefined
   }
 
-  assertVineEquals(
+  assert.vineEquals(
     vine.lucid(ClassA),
     vine.object({
       fieldA: vine.string(),
@@ -39,7 +39,7 @@ test('Optional', async () => {
   )
 })
 
-test('Ignore non @VineModel', async () => {
+test('Ignore non @VineModel', async ({ assert }) => {
   class ClassA extends BaseModel {
     @VineModel(vine.string())
     @column()
@@ -53,7 +53,7 @@ test('Ignore non @VineModel', async () => {
     declare fieldC: number | undefined
   }
 
-  assertVineEquals(
+  assert.vineEquals(
     vine.lucid(ClassA),
     vine.object({
       fieldA: vine.string(),
@@ -62,7 +62,7 @@ test('Ignore non @VineModel', async () => {
   )
 })
 
-test('Enum', async () => {
+test('Enum', async ({ assert }) => {
   enum EnumA {
     value1,
     value2,
@@ -73,7 +73,7 @@ test('Enum', async () => {
     declare fieldA: EnumA
   }
 
-  assertVineEquals(
+  assert.vineEquals(
     vine.lucid(ClassA),
     vine.object({
       fieldA: vine.enum(EnumA),
@@ -81,7 +81,7 @@ test('Enum', async () => {
   )
 })
 
-test('Enum array', async () => {
+test('Enum array', async ({ assert }) => {
   enum EnumA {
     value1,
     value2,
@@ -92,7 +92,7 @@ test('Enum array', async () => {
     declare fieldA: EnumA[]
   }
 
-  assertVineEquals(
+  assert.vineEquals(
     vine.lucid(ClassA),
     vine.object({
       fieldA: vine.array(vine.enum(EnumA)),
@@ -100,8 +100,8 @@ test('Enum array', async () => {
   )
 })
 
-test('Update', async () => {
-  assertVineEquals(
+test('Update', async ({ assert }) => {
+  assert.vineEquals(
     vine.lucid(ClassFields, { update: true }),
     vine.object({
       fieldB: vine.string().optional().nullable(),
@@ -110,8 +110,8 @@ test('Update', async () => {
   )
 })
 
-test('Partial', async () => {
-  assertVineEquals(
+test('Partial', async ({ assert }) => {
+  assert.vineEquals(
     vine.lucid(ClassFields, { partial: true }),
     vine.object({
       fieldA: vine.string().optional(),
@@ -122,8 +122,8 @@ test('Partial', async () => {
   )
 })
 
-test('Nullable', async () => {
-  assertVineEquals(
+test('Nullable', async ({ assert }) => {
+  assert.vineEquals(
     vine.lucid(ClassFields, { null: true }),
     vine
       .object({

@@ -1,13 +1,8 @@
-import { BaseModel, column, manyToMany } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column, manyToMany } from '@adonisjs/lucid/orm'
 import type { BelongsTo, ManyToMany } from '@adonisjs/lucid/types/relations'
 import { test } from '@japa/runner'
 import vine from '@vinejs/vine'
-import {
-  assertVineEquals,
-  belongsToWithIdColumn,
-  EnabledRelation,
-  VineModel,
-} from '../../../index.js'
+import { EnabledRelation, VineModel } from '../../../index.js'
 
 test('Relation | mutability assignOnly | update | secondaryKey', async () => {
   class ChildSecondary extends BaseModel {
@@ -31,7 +26,7 @@ test('Relation | mutability assignOnly | update | secondaryKey', async () => {
     declare fieldA: string
 
     @VineModel(vine.lucid(ChildSecondary, { partial: true, null: true }), ChildSecondary)
-    @belongsToWithIdColumn(() => ChildSecondary)
+    @belongsTo(() => ChildSecondary)
     declare child: BelongsTo<typeof ChildSecondary>
   }
 

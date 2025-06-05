@@ -1,13 +1,9 @@
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import { test } from '@japa/runner'
 import vine from '@vinejs/vine'
-import {
-  assertVineEquals,
-  belongsToWithIdColumn,
-  EnabledRelation,
-  VineModel,
-} from '../../../index.js'
+import { EnabledRelation, VineModel } from '../../../index.js'
+import '../../assert_vine.js'
 import { Child } from '../base.js'
 
 class Parent extends BaseModel {
@@ -18,12 +14,12 @@ class Parent extends BaseModel {
   declare fieldA: string
 
   @VineModel(vine.lucid(Child, { partial: true, null: true }), Child)
-  @belongsToWithIdColumn(() => Child)
+  @belongsTo(() => Child)
   declare child: BelongsTo<typeof Child>
 }
 
-test('No relation', async () => {
-  assertVineEquals(
+test('No relation', async ({ assert }) => {
+  assert.vineEquals(
     vine.lucid(Parent),
     vine.object({
       fieldA: vine.string(),
@@ -31,8 +27,8 @@ test('No relation', async () => {
   )
 })
 
-test('Relation | mutability readOnly', async () => {
-  assertVineEquals(
+test('Relation | mutability readOnly', async ({ assert }) => {
+  assert.vineEquals(
     vine.lucid(Parent, {
       relations: [EnabledRelation.readOnly('child')],
     }),
@@ -48,8 +44,8 @@ test('Relation | mutability readOnly', async () => {
   )
 })
 
-test('Relation | mutability readOnly | update', async () => {
-  assertVineEquals(
+test('Relation | mutability readOnly | update', async ({ assert }) => {
+  assert.vineEquals(
     vine.lucid(Parent, {
       relations: [EnabledRelation.readOnly('child')],
       update: true,
@@ -58,8 +54,8 @@ test('Relation | mutability readOnly | update', async () => {
   )
 })
 
-test('Relation | mutability full', async () => {
-  assertVineEquals(
+test('Relation | mutability full', async ({ assert }) => {
+  assert.vineEquals(
     vine.lucid(Parent, {
       relations: [EnabledRelation.full('child')],
     }),
@@ -75,8 +71,8 @@ test('Relation | mutability full', async () => {
   )
 })
 
-test('Relation | mutability full | update', async () => {
-  assertVineEquals(
+test('Relation | mutability full | update', async ({ assert }) => {
+  assert.vineEquals(
     vine.lucid(Parent, {
       relations: [EnabledRelation.full('child')],
       update: true,
@@ -93,8 +89,8 @@ test('Relation | mutability full | update', async () => {
   )
 })
 
-test('Relation | mutability assignOnly ', async () => {
-  assertVineEquals(
+test('Relation | mutability assignOnly ', async ({ assert }) => {
+  assert.vineEquals(
     vine.lucid(Parent, {
       relations: [EnabledRelation.assignOnly('child')],
     }),
@@ -110,8 +106,8 @@ test('Relation | mutability assignOnly ', async () => {
   )
 })
 
-test('Relation | mutability assignOnly | update', async () => {
-  assertVineEquals(
+test('Relation | mutability assignOnly | update', async ({ assert }) => {
+  assert.vineEquals(
     vine.lucid(Parent, {
       relations: [EnabledRelation.assignOnly('child')],
       update: true,

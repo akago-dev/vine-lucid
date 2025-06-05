@@ -1,11 +1,10 @@
 import { test } from '@japa/runner'
 import vine from '@vinejs/vine'
-import { assertVineEquals } from '../../../index.js'
 import { ClassFields } from '../base.js'
 
 test.group('Primary key', async () => {
-  test('keep', async () => {
-    assertVineEquals(
+  test('keep', async ({ assert }) => {
+    assert.vineEquals(
       vine.lucid(ClassFields, { primaryKey: 'keep' }),
       vine.object({
         fieldA: vine.string(),
@@ -16,8 +15,8 @@ test.group('Primary key', async () => {
     )
   })
 
-  test('only', async () => {
-    assertVineEquals(
+  test('only', async ({ assert }) => {
+    assert.vineEquals(
       vine.lucid(ClassFields, { primaryKey: 'only' }),
       vine.object({
         fieldA: vine.string(),
@@ -27,8 +26,8 @@ test.group('Primary key', async () => {
 })
 
 test.group('Update', async () => {
-  test('Keep', async () => {
-    assertVineEquals(
+  test('Keep', async ({ assert }) => {
+    assert.vineEquals(
       vine.lucid(ClassFields, { update: true, primaryKey: 'keep' }),
       vine.object({
         fieldA: vine.string(),
@@ -38,8 +37,8 @@ test.group('Update', async () => {
     )
   })
 
-  test('Only', async () => {
-    assertVineEquals(
+  test('Only', async ({ assert }) => {
+    assert.vineEquals(
       vine.lucid(ClassFields, { update: true, primaryKey: 'only' }),
       vine.object({
         fieldA: vine.string(),

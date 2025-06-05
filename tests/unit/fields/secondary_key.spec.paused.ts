@@ -1,7 +1,7 @@
 import { BaseModel, column, computed } from '@adonisjs/lucid/orm'
 import { test } from '@japa/runner'
 import vine from '@vinejs/vine'
-import { VineModel, assertVineEquals } from '../../../index.js'
+import { VineModel } from '../../../index.js'
 
 class ClassFields extends BaseModel {
   static excludeUpdate = ['fieldA', 'fieldC']

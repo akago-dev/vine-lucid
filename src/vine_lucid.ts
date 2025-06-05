@@ -2,7 +2,8 @@ import { LucidModel } from '@adonisjs/lucid/types/model'
 import vine, { symbols, Vine, VineObject } from '@vinejs/vine'
 import type { NullableModifier } from '@vinejs/vine/schema/base/main'
 import { EnabledRelation } from './enabled_relations.js'
-import { arrayIncludesArray, firstOrderPaths, subpathsObject } from './helpers.js'
+import './helpers/index.js'
+import { firstOrderPaths, subpathsObject } from './helpers/index.js'
 
 export type VineLucidModelOptions = {
   /**
@@ -97,7 +98,7 @@ const vineLucid = function <M extends LucidModel>(
     }
   })
 
-  let properties = {
+  let properties: { [k: string]: any } = {
     ...columnProperties,
     ...(options?.update || options?.partial ? {} : computedProperties),
     ...relationsProperties,
@@ -147,7 +148,7 @@ const vineLucid = function <M extends LucidModel>(
   if (!options?.partial) {
     const pk = model.primaryKey
     const sks = (model as any).secondaryKeys
-    if (sks?.length && arrayIncludesArray(Object.keys(properties), [pk, ...sks])) {
+    if (sks?.length && Object.keys(properties).includesArray([pk, ...sks])) {
       if (pk in properties) properties[pk] = properties[pk].optional().requiredIfAnyMissing(sks)
       for (var sk of sks)
         if (sk in properties) {
