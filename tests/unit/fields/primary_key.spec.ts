@@ -4,7 +4,7 @@ import { ClassFields } from '../base.js'
 
 test.group('Primary key', async () => {
   test('keep', async ({ assert }) => {
-    assert.vineEquals(
+    assert.vine.equals(
       vine.lucid(ClassFields, { primaryKey: 'keep' }),
       vine.object({
         fieldA: vine.string(),
@@ -16,7 +16,7 @@ test.group('Primary key', async () => {
   })
 
   test('only', async ({ assert }) => {
-    assert.vineEquals(
+    assert.vine.equals(
       vine.lucid(ClassFields, { primaryKey: 'only' }),
       vine.object({
         fieldA: vine.string(),
@@ -27,7 +27,7 @@ test.group('Primary key', async () => {
 
 test.group('Update', async () => {
   test('Keep', async ({ assert }) => {
-    assert.vineEquals(
+    assert.vine.equals(
       vine.lucid(ClassFields, { update: true, primaryKey: 'keep' }),
       vine.object({
         fieldA: vine.string(),
@@ -38,7 +38,7 @@ test.group('Update', async () => {
   })
 
   test('Only', async ({ assert }) => {
-    assert.vineEquals(
+    assert.vine.equals(
       vine.lucid(ClassFields, { update: true, primaryKey: 'only' }),
       vine.object({
         fieldA: vine.string(),
