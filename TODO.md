@@ -1,6 +1,5 @@
-- put licence header in each file
-- Comment each helpers.ts
 - Ajouter plus de tests
 - Ajouter un test pour les dependance cyclique (provider)
 - gérer les types pour excludeUpdate et secondary key
+- readme
 - publish npm

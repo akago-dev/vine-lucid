@@ -1,3 +1,12 @@
+/*
+ * vine-lucid
+ *
+ * (c) AKAGO SAS <po@akago.fr>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 import { BaseModel, belongsTo, column, manyToMany } from '@adonisjs/lucid/orm'
 import type { BelongsTo, ManyToMany } from '@adonisjs/lucid/types/relations'
 import { test } from '@japa/runner'
