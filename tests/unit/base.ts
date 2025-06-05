@@ -21,3 +21,15 @@ export class ClassFields extends BaseModel {
   @column()
   declare fieldD: number | null
 }
+
+export class Child extends BaseModel {
+  static excludeUpdate = ['childFieldA']
+
+  @VineModel(vine.string())
+  @column({ isPrimary: true })
+  declare childFieldA: string
+
+  @VineModel(vine.string())
+  @column()
+  declare childFieldB: string
+}

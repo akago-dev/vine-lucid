@@ -1,6 +1,5 @@
 import { LucidModel } from '@adonisjs/lucid/types/model'
 import { BaseLiteralType } from '@vinejs/vine'
-import _ from 'lodash'
 import { VineModelSchemasInstallers } from './provider.js'
 
 /**
@@ -25,14 +24,14 @@ export function VineModel<VineSchema extends BaseLiteralType<any, any, any>, M e
       parentModel.$computedDefinitions.get(propertyName) ||
       (parentModel.$relationsDefinitions.get(propertyName) as any)
     if (definition)
-      if (_.isFunction(schema)) {
-        if (_.isFunction(model))
+      if (typeof schema === 'function') {
+        if (typeof model === 'function')
           VineModelSchemasInstallers.push(
             () =>
               (definition.meta = {
                 ...definition.meta,
                 vine: schema(),
-                model: model(),
+                model: (model as () => any)(),
               })
           )
         else

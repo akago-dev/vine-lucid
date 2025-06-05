@@ -1,7 +1,7 @@
-- [] Get rid of lodash
-- [] put licence header in each file
-- [] Comment each helpers.ts
-- [] Ajouter un test pour les dependance cyclique (provider)
-- [] intégrer assertVineEquals a vine => assert.vine.equals()
-- [] gérer les types pour excludeUpdate et secondary key
-- [] publish npm
+- put licence header in each file
+- Comment each helpers.ts
+- Ajouter plus de tests
+- Ajouter un test pour les dependance cyclique (provider)
+- intégrer assertVineEquals a vine => assert.vine.equals()
+- gérer les types pour excludeUpdate et secondary key
+- publish npm
