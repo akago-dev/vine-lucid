@@ -7,5 +7,7 @@
  * file that was distributed with this source code.
  */
 
-export * from './src/vine_lucid'
-export { VineModel } from './src/vine_model'
+export * from './src/enabled_relations.js'
+export * from './src/helpers.js'
+export * from './src/vine_lucid.js'
+export { VineModel } from './src/vine_model.js'

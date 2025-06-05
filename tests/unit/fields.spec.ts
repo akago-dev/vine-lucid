@@ -1,55 +1,53 @@
-import { VineModel } from "#akago_backend/lib/vine_model";
-import { AKNakedModel } from "#akago_backend/model";
-import { assertVineEquals } from "#tests/lib/macros";
-import { BaseModel, column, computed } from "@adonisjs/lucid/orm";
-import { test } from "@japa/runner";
-import vine from "@vinejs/vine";
+import { BaseModel, column, computed } from '@adonisjs/lucid/orm'
+import { test } from '@japa/runner'
+import vine from '@vinejs/vine'
+import { VineModel, assertVineEquals } from '../../index.js'
 
-class ClassFields extends AKNakedModel {
-  static override excludeUpdate = ["fieldA", "fieldC"];
+class ClassFields extends BaseModel {
+  static excludeUpdate = ['fieldA', 'fieldC']
 
   @VineModel(vine.string())
   @column({ isPrimary: true })
-  declare fieldA: string;
+  declare fieldA: string
 
   @VineModel(vine.string())
   @column()
-  declare fieldB: string;
+  declare fieldB: string
 
   @VineModel(vine.number().optional())
   @column()
-  declare fieldC: number | undefined;
+  declare fieldC: number | undefined
 
   @VineModel(vine.number().nullable())
   @column()
-  declare fieldD: number | null;
+  declare fieldD: number | null
 }
 
-test.group("Fields", async () => {
-  test("Nominal case", async () => {
+test.group('Fields', async () => {
+  test('Nominal case', async () => {
     class ClassA extends BaseModel {
       @VineModel(vine.string())
       @column()
-      declare fieldA: string;
+      declare fieldA: string
     }
 
     assertVineEquals(
       vine.lucid(ClassA),
       vine.object({
         fieldA: vine.string(),
-      }),
-    );
-  });
+      })
+    )
+  })
 
-  test("Optional", async () => {
+  test('Optional', async () => {
     class ClassA extends BaseModel {
       @VineModel(vine.string())
       @column()
-      declare fieldA: string;
+      declare fieldA: string
 
       @VineModel(vine.number().optional())
       @column()
-      declare fieldB: number | undefined;
+      declare fieldB: number | undefined
     }
 
     assertVineEquals(
@@ -57,22 +55,22 @@ test.group("Fields", async () => {
       vine.object({
         fieldA: vine.string(),
         fieldB: vine.number().optional(),
-      }),
-    );
-  });
+      })
+    )
+  })
 
-  test("Ignore non @VineModel", async () => {
+  test('Ignore non @VineModel', async () => {
     class ClassA extends BaseModel {
       @VineModel(vine.string())
       @column()
-      declare fieldA: string;
+      declare fieldA: string
 
       @VineModel(vine.number().optional())
       @column()
-      declare fieldB: number | undefined;
+      declare fieldB: number | undefined
 
       @column()
-      declare fieldC: number | undefined;
+      declare fieldC: number | undefined
     }
 
     assertVineEquals(
@@ -80,11 +78,11 @@ test.group("Fields", async () => {
       vine.object({
         fieldA: vine.string(),
         fieldB: vine.number().optional(),
-      }),
-    );
-  });
+      })
+    )
+  })
 
-  test("Enum", async () => {
+  test('Enum', async () => {
     enum EnumA {
       value1,
       value2,
@@ -92,18 +90,18 @@ test.group("Fields", async () => {
     class ClassA extends BaseModel {
       @VineModel(vine.enum(EnumA))
       @column()
-      declare fieldA: EnumA;
+      declare fieldA: EnumA
     }
 
     assertVineEquals(
       vine.lucid(ClassA),
       vine.object({
         fieldA: vine.enum(EnumA),
-      }),
-    );
-  });
+      })
+    )
+  })
 
-  test("Enum array", async () => {
+  test('Enum array', async () => {
     enum EnumA {
       value1,
       value2,
@@ -111,18 +109,18 @@ test.group("Fields", async () => {
     class ClassA extends BaseModel {
       @VineModel(vine.array(vine.enum(EnumA)))
       @column()
-      declare fieldA: EnumA[];
+      declare fieldA: EnumA[]
     }
 
     assertVineEquals(
       vine.lucid(ClassA),
       vine.object({
         fieldA: vine.array(vine.enum(EnumA)),
-      }),
-    );
-  });
+      })
+    )
+  })
 
-  test("Partial", async () => {
+  test('Partial', async () => {
     assertVineEquals(
       vine.lucid(ClassFields, { partial: true }),
       vine.object({
@@ -130,11 +128,11 @@ test.group("Fields", async () => {
         fieldB: vine.string().optional(),
         fieldC: vine.number().optional(),
         fieldD: vine.number().nullable().optional(),
-      }),
-    );
-  });
+      })
+    )
+  })
 
-  test("Nullable", async () => {
+  test('Nullable', async () => {
     assertVineEquals(
       vine.lucid(ClassFields, { null: true }),
       vine
@@ -144,108 +142,108 @@ test.group("Fields", async () => {
           fieldC: vine.number().optional().nullable(),
           fieldD: vine.number().nullable(),
         })
-        .nullable(),
-    );
-  });
-});
+        .nullable()
+    )
+  })
+})
 
-test.group("Primary key", async () => {
-  test("keep", async () => {
+test.group('Primary key', async () => {
+  test('keep', async () => {
     assertVineEquals(
-      vine.lucid(ClassFields, { primaryKey: "keep" }),
+      vine.lucid(ClassFields, { primaryKey: 'keep' }),
       vine.object({
         fieldA: vine.string(),
         fieldB: vine.string(),
         fieldC: vine.number().optional(),
         fieldD: vine.number().nullable(),
-      }),
-    );
-  });
+      })
+    )
+  })
 
-  test("only", async () => {
+  test('only', async () => {
     assertVineEquals(
-      vine.lucid(ClassFields, { primaryKey: "only" }),
+      vine.lucid(ClassFields, { primaryKey: 'only' }),
       vine.object({
         fieldA: vine.string(),
-      }),
-    );
-  });
+      })
+    )
+  })
 
-  test("only (on model with secondary key)", async () => {
+  test('only (on model with secondary key)', async () => {
     class ClassFieldsSecondary extends ClassFields {
-      static override secondaryKey = ["fieldB"];
+      static secondaryKey = ['fieldB']
     }
 
     assertVineEquals(
-      vine.lucid(ClassFieldsSecondary, { primaryKey: "only" }),
+      vine.lucid(ClassFieldsSecondary, { primaryKey: 'only' }),
       vine.object({
-        fieldA: vine.string().optional().requiredIfMissing("fieldB"),
-        fieldB: vine.string().optional().requiredIfAnyMissing(["fieldA"]),
-      }),
-    );
-  });
-});
+        fieldA: vine.string().optional().requiredIfMissing('fieldB'),
+        fieldB: vine.string().optional().requiredIfAnyMissing(['fieldA']),
+      })
+    )
+  })
+})
 
-test.group("Update", async () => {
-  test("Nominal case", async () => {
+test.group('Update', async () => {
+  test('Nominal case', async () => {
     assertVineEquals(
       vine.lucid(ClassFields, { update: true }),
       vine.object({
         fieldB: vine.string().optional().nullable(),
         fieldD: vine.number().nullable().optional(),
-      }),
-    );
-  });
+      })
+    )
+  })
 
-  test("primary key : keep", async () => {
+  test('primary key : keep', async () => {
     assertVineEquals(
-      vine.lucid(ClassFields, { update: true, primaryKey: "keep" }),
+      vine.lucid(ClassFields, { update: true, primaryKey: 'keep' }),
       vine.object({
         fieldA: vine.string(),
         fieldB: vine.string().optional().nullable(),
         fieldD: vine.number().nullable().optional(),
-      }),
-    );
-  });
+      })
+    )
+  })
 
-  test("primary key : only", async () => {
+  test('primary key : only', async () => {
     assertVineEquals(
-      vine.lucid(ClassFields, { update: true, primaryKey: "only" }),
+      vine.lucid(ClassFields, { update: true, primaryKey: 'only' }),
       vine.object({
         fieldA: vine.string(),
-      }),
-    );
-  });
-});
+      })
+    )
+  })
+})
 
-test.group("Update | Secondary key", async () => {
+test.group('Update | Secondary key', async () => {
   class ClassFieldsSecondary extends ClassFields {
-    static override secondaryKey = ["fieldB"];
+    static secondaryKey = ['fieldB']
   }
 
-  test("Nominal case", async () => {
+  test('Nominal case', async () => {
     assertVineEquals(
       vine.lucid(ClassFieldsSecondary, { update: true }),
       vine.object({
         fieldB: vine.string().optional(),
         fieldD: vine.number().nullable().optional(),
-      }),
-    );
-  });
+      })
+    )
+  })
 
-  test("Partial", async () => {
+  test('Partial', async () => {
     assertVineEquals(
       vine.lucid(ClassFieldsSecondary, { update: true, partial: true }),
       vine.object({
         fieldB: vine.string().optional(),
         fieldD: vine.number().nullable().optional(),
-      }),
-    );
-  });
+      })
+    )
+  })
 
-  test("Partial with no excludeUpdate", async () => {
+  test('Partial with no excludeUpdate', async () => {
     class ClassFieldsSecondaryNoExcludedUpdates extends ClassFieldsSecondary {
-      static override excludeUpdate = [];
+      static override excludeUpdate = []
     }
 
     assertVineEquals(
@@ -258,49 +256,46 @@ test.group("Update | Secondary key", async () => {
         fieldB: vine.string().optional(),
         fieldC: vine.number().nullable().optional(),
         fieldD: vine.number().nullable().optional(),
-      }),
-    );
-  });
-});
+      })
+    )
+  })
+})
 
-test.group("Computed | Secondary key", async () => {
-  class ClassComputed extends AKNakedModel {
-    static override excludeUpdate = ["fieldA", "fieldC"];
+test.group('Computed | Secondary key', async () => {
+  class ClassComputed extends BaseModel {
+    static excludeUpdate = ['fieldA', 'fieldC']
 
     @VineModel(vine.string())
     @column({ isPrimary: true })
-    declare fieldA: string;
+    declare fieldA: string
 
     @VineModel(vine.string())
     @computed()
     get fieldB(): string {
-      return this.fieldA;
+      return this.fieldA
     }
   }
 
-  test("Nominal case", async () => {
+  test('Nominal case', async () => {
     assertVineEquals(
       vine.lucid(ClassComputed),
       vine.object({
         fieldA: vine.string(),
         fieldB: vine.string(),
-      }),
-    );
-  });
+      })
+    )
+  })
 
-  test("Update", async () => {
-    assertVineEquals(
-      vine.lucid(ClassComputed, { update: true }),
-      vine.object({}),
-    );
-  });
+  test('Update', async () => {
+    assertVineEquals(vine.lucid(ClassComputed, { update: true }), vine.object({}))
+  })
 
-  test("Partial", async () => {
+  test('Partial', async () => {
     assertVineEquals(
       vine.lucid(ClassComputed, { partial: true }),
       vine.object({
         fieldA: vine.string().optional(),
-      }),
-    );
-  });
-});
+      })
+    )
+  })
+})
