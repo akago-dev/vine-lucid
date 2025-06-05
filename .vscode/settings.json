@@ -1,0 +1,10 @@
+{
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/build": true
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "prettier.configPath": "package.json"
+}

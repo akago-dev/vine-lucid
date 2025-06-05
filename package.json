@@ -2,10 +2,6 @@
   "name": "vine-lucid",
   "version": "0.1.0",
   "description": "Generate a vine schema based on a lucid model definition",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/akago-dev/vine-lucid.git"
@@ -15,12 +11,44 @@
     "lucid",
     "model",
     "orm",
-    "validation"
+    "validation",
+    "adonisjs",
+    "adonis"
   ],
   "author": "AKAGO",
   "license": "SEE LICENCE IN LICENCE",
   "bugs": {
     "url": "https://github.com/akago-dev/vine-lucid/issues"
   },
-  "homepage": "https://github.com/akago-dev/vine-lucid#readme"
+  "homepage": "https://github.com/akago-dev/vine-lucid#readme",
+  "main": "./build/index.js",
+  "type": "module",
+  "files": [
+    "build",
+    "!build/bin",
+    "!build/tests"
+  ],
+  "exports": {
+    ".": "./build/index.js"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit",
+    "precompile": "npm run lint && npm run clean",
+    "compile": "tsup-node && tsc --emitDeclarationOnly --declaration",
+    "build": "npm run compile"
+  },
+  "devDependencies": {
+    "@adonisjs/eslint-config": "^2.0.0-beta.6",
+    "@adonisjs/prettier-config": "^1.4.0",
+    "@adonisjs/tsconfig": "^1.4.0",
+    "@types/node": "^22.15.29",
+    "prettier": "^3.3.3",
+    "typescript": "~5.5"
+  },
+  "eslintConfig": {
+    "extends": "@adonisjs/eslint-config/package"
+  },
+  "prettier": "@adonisjs/prettier-config"
 }

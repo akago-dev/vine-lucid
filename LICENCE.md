@@ -10,8 +10,8 @@ Terms:
 
 The Licensed Work is provided under the terms of this Business Source License 1.1 (“BSL”), which is not an open source license. However, the Licensed Work will be made available under the Change License on the Change Date.
 
-Usage Limitation: 
-You may use, copy, modify, and distribute the Licensed Work for any non-commercial purpose. 
+Usage Limitation:
+You may use, copy, modify, and distribute the Licensed Work for any non-commercial purpose.
 Commercial use — including but not limited to offering the Licensed Work as a service, incorporating it into a commercial product, or selling it — is not permitted without the Licensor’s prior written permission.
 
 Change License:
