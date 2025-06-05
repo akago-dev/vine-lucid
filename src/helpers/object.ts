@@ -1,19 +1,24 @@
 declare global {
   interface Object {
-    /** Returns a copy of this with the elements that meet the condition specified in a callback function.
+    /**
+     * Returns a copy of this with the elements that meet the condition specified in a callback function.
      */
     filter<T extends Record<string, unknown>>(
       this: T,
       predicate: (value: T[keyof T], key: string) => boolean
     ): Partial<T>
 
-    /** Returns a copy of this with the elements that don't meet the condition specified in a callback function.
+    /**
+     * Returns a copy of this with the elements that don't meet the condition specified in a callback function.
      */
     exclude<T extends Record<string, unknown>>(
       this: T,
       predicate: (value: T[keyof T], key: string) => boolean
     ): Partial<T>
 
+    /**
+     * Creates a new object with the same keys as `this` and values mapped by `mapper`
+     */
     mapValues<T extends Record<string, any>, R>(
       this: T,
       mapper: (value: T[keyof T], key: string) => R

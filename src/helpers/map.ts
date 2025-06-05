@@ -1,4 +1,7 @@
 declare global {
+  /**
+   * Creates a object with the same keys & values as `this`
+   */
   interface Map<K extends string | number | symbol, V> {
     toObject(this: Map<K, V>): { K: V }
   }

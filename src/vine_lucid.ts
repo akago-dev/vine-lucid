@@ -2,7 +2,6 @@ import { LucidModel } from '@adonisjs/lucid/types/model'
 import vine, { symbols, Vine, VineObject } from '@vinejs/vine'
 import type { NullableModifier } from '@vinejs/vine/schema/base/main'
 import { EnabledRelation } from './enabled_relations.js'
-import './helpers/index.js'
 import { firstOrderPaths, subpathsObject } from './helpers/index.js'
 
 export type VineLucidModelOptions = {
