@@ -15,6 +15,7 @@ import { assertVine } from '../tests/assert_vine.js'
 processCLIArgs(process.argv.splice(2))
 configure({
   files: ['tests/**/*.spec.ts'],
+  exclude: undefined,
   plugins: [assert(), expectTypeOf(), assertVine()],
 })
 
