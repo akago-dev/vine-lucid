@@ -8,31 +8,44 @@
  */
 
 import { LucidModel } from '@adonisjs/lucid/types/model'
-import vine, { symbols, Vine, VineObject } from '@vinejs/vine'
+import vine, { Vine, VineObject } from '@vinejs/vine'
 import type { NullableModifier } from '@vinejs/vine/schema/base/main'
-import { EnabledRelation } from './enabled_relations.js'
-import { firstOrderPaths, subpathsObject } from './helpers/index.js'
+import { firstOrderPaths, subpathsObject, vineIsArray } from './helpers/index.js'
+import { Relation } from './relation.js'
 
 export type VineLucidModelOptions = {
   /**
-   * Exclude recursively fields present in model.excludeUpdate (See also : `primaryKey`)
-   * Also takes into account mutability of relations.
-   */
-  update?: boolean
-  /** Apply `.optional()` to all fields */
-  partial?: boolean
-  /** Accepts null as a correct value. Useful for deleting relations. */
-  null?: boolean
-  /** Relations to include in the schema.  */
-  relations?: EnabledRelation[]
-  /**
-   * keep : Keep primary key field no matter the value of `update`
-   * only : Keep only primary key field no matter the value of `update`.
+   * noop (default) : don't do anything
+   * keep : Keep primary key field
+   * only : Keep only primary key field.
    *        If model has secondaryKey, primary or secondary are optional
    *        but one must be given.
-   * noop (default) : don't do anything
+   * This behaviour takes precedence on `update`
    */
   primaryKey?: 'keep' | 'only' | 'noop'
+
+  /**
+   * Exclude fields present in model's static property `excludeFromUpdate: string[]`.
+   * Also take into account `relations`'s `excludeFromUpdate`.
+   * Also takes into account mutability of relations.
+   * This behaviour is overriten by `primaryKey` behaviour.
+   */
+  update?: boolean
+
+  /**
+   * Apply `.optional()` to all fields
+   */
+  partial?: boolean
+
+  /**
+   * Apply `.nullable()` to all fields. Useful for deleting relations.
+   */
+  null?: boolean
+
+  /**
+   * Relations to include in the schema.
+   */
+  relations?: Relation[]
 }
 
 type VineLucidReturn = VineObject<any, any, any, any>
@@ -42,7 +55,7 @@ declare module '@vinejs/vine' {
   interface Vine {
     /**
      * Generates a vine schema based on model definition.
-     * Specificaly, based on `@VineModel()` decorator of model's properties.
+     * Specificaly, based on `@VineModel()` decorator of model properties.
      * @param model the model which properties are generated
      * @param options this options will be propagated to relations of the model
      * @returns a vine schema
@@ -115,7 +128,7 @@ const vineLucid = function <M extends LucidModel>(
   const modelKeys: string[] = [model.primaryKey]
 
   // Exclude
-  const excludes: string[] = options?.update ? (model as any).excludeUpdate : []
+  const excludes: string[] = options?.update ? ((model as any).excludeFromUpdate ?? []) : []
   properties = properties.exclude((_v, k) => {
     switch (options?.primaryKey) {
       case undefined:
@@ -170,5 +183,3 @@ const vineLucid = function <M extends LucidModel>(
 }
 
 Vine.macro('lucid', vineLucid)
-
-const vineIsArray = (vine: any): boolean => vine[symbols.UNIQUE_NAME] === 'vine.array'

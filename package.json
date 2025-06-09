@@ -55,10 +55,11 @@
     "@japa/expect-type": "^2.0.3",
     "@japa/runner": "^4.2.0",
     "@swc/core": "^1.11.31",
-    "@types/node": "^22.15.29",
+    "@types/node": "^22.15.30",
     "nodemon": "^3.1.10",
     "prettier": "^3.5.3",
     "ts-node": "^10.9.2",
+    "tslib": "^2.8.1",
     "typescript": "^5.8.3"
   },
   "eslintConfig": {

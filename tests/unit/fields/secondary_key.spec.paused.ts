@@ -13,7 +13,7 @@ import vine from '@vinejs/vine'
 import { VineModel } from '../../../index.js'
 
 class ClassFields extends BaseModel {
-  static excludeUpdate = ['fieldA', 'fieldC']
+  static excludeFromUpdate = ['fieldA', 'fieldC']
 
   @VineModel(vine.string())
   @column({ isPrimary: true })
@@ -57,9 +57,9 @@ test.group('Update | Secondary key', async () => {
     )
   })
 
-  test('Partial with no excludeUpdate', async () => {
+  test('Partial with no excludeFromUpdate', async () => {
     class ClassFieldsSecondaryNoExcludedUpdates extends ClassFieldsSecondary {
-      static override excludeUpdate = []
+      static override excludeFromUpdate = []
     }
 
     assertVineEquals(
@@ -79,7 +79,7 @@ test.group('Update | Secondary key', async () => {
 
 test.group('Computed | Secondary key', async () => {
   class ClassComputed extends BaseModel {
-    static excludeUpdate = ['fieldA', 'fieldC']
+    static excludeFromUpdate = ['fieldA', 'fieldC']
 
     @VineModel(vine.string())
     @column({ isPrimary: true })

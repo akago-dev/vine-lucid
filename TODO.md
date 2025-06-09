@@ -1,4 +1,4 @@
 - Ajouter plus de tests
-- gérer les types pour excludeUpdate et secondary key
+- gérer les types secondary key
 - readme
 - publish npm

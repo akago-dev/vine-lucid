@@ -11,11 +11,11 @@ import { BaseModel, belongsTo, column, manyToMany } from '@adonisjs/lucid/orm'
 import type { BelongsTo, ManyToMany } from '@adonisjs/lucid/types/relations'
 import { test } from '@japa/runner'
 import vine from '@vinejs/vine'
-import { EnabledRelation, VineModel } from '../../../index.js'
+import { Relation, VineModel } from '../../../index.js'
 
 test('Relation | mutability assignOnly | update | secondaryKey', async () => {
   class ChildSecondary extends BaseModel {
-    static excludeUpdate = ['childFieldA']
+    static excludeFromUpdate = ['childFieldA']
     static secondaryKey = 'childFieldB'
 
     @VineModel(vine.string())
@@ -28,7 +28,7 @@ test('Relation | mutability assignOnly | update | secondaryKey', async () => {
   }
 
   class ParentSecondary extends BaseModel {
-    static excludeUpdate = ['fieldA', 'fieldC']
+    static excludeFromUpdate = ['fieldA', 'fieldC']
 
     @VineModel(vine.string())
     @column({ isPrimary: true })
@@ -41,7 +41,7 @@ test('Relation | mutability assignOnly | update | secondaryKey', async () => {
 
   assertVineEquals(
     vine.lucid(ParentSecondary, {
-      relations: [EnabledRelation.assignOnly('child')],
+      relations: [Relation.assignOnly('child')],
       update: true,
     }),
     vine.object({
@@ -58,7 +58,7 @@ test('Relation | mutability assignOnly | update | secondaryKey', async () => {
 
 test('Relation | mutability assignOnly | update | secondaryKey', async () => {
   class ChildSecondary extends BaseModel {
-    static excludeUpdate = ['childFieldA']
+    static excludeFromUpdate = ['childFieldA']
     static secondaryKey = 'childFieldB'
 
     @VineModel(vine.string())
@@ -71,7 +71,7 @@ test('Relation | mutability assignOnly | update | secondaryKey', async () => {
   }
 
   class ParentSecondary extends BaseModel {
-    static excludeUpdate = ['fieldA']
+    static excludeFromUpdate = ['fieldA']
 
     @VineModel(vine.string())
     @column({ isPrimary: true })
@@ -87,7 +87,7 @@ test('Relation | mutability assignOnly | update | secondaryKey', async () => {
 
   assertVineEquals(
     vine.lucid(ParentSecondary, {
-      relations: [EnabledRelation.assignOnly('children')],
+      relations: [Relation.assignOnly('children')],
       update: true,
     }),
     vine.object({

@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+import { symbols } from '@vinejs/vine'
+
 declare global {
   interface Array<T> {
     /**
@@ -21,3 +23,5 @@ Object.defineProperty(Array.prototype, 'includesArray', {
     return other.every((e) => this.includes(e as any))
   },
 })
+
+export const vineIsArray = (vine: any): boolean => vine[symbols.UNIQUE_NAME] === 'vine.array'

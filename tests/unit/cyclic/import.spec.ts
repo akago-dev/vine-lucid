@@ -9,7 +9,7 @@
 
 import { test } from '@japa/runner'
 import vine from '@vinejs/vine'
-import { EnabledRelation } from '../../../index.js'
+import { Relation } from '../../../index.js'
 import VineModelProvider from '../../../src/provider.js'
 import { ClassA } from './class_a.js'
 import { ClassB } from './class_b.js'
@@ -32,7 +32,7 @@ test('Base field', async ({ assert }) => {
 test('Relations', async ({ assert }) => {
   assert.vine.equals(
     vine.lucid(ClassA, {
-      relations: [EnabledRelation.full('otherB')],
+      relations: [Relation.full('otherB')],
     }),
     vine.object({
       name: vine.string(),
@@ -43,6 +43,4 @@ test('Relations', async ({ assert }) => {
         .nullable(),
     })
   )
-})
-  .setup(new VineModelProvider().register)
-  .pin()
+}).setup(new VineModelProvider().register)

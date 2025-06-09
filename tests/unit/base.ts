@@ -12,7 +12,7 @@ import vine from '@vinejs/vine'
 import { VineModel } from '../../index.js'
 
 export class ClassFields extends BaseModel {
-  static excludeUpdate = ['fieldA', 'fieldC']
+  static excludeFromUpdate = ['fieldA', 'fieldC']
 
   @VineModel(vine.string())
   @column({ isPrimary: true })
@@ -32,7 +32,7 @@ export class ClassFields extends BaseModel {
 }
 
 export class Child extends BaseModel {
-  static excludeUpdate = ['childFieldA']
+  static excludeFromUpdate = ['childFieldA']
 
   @VineModel(vine.string())
   @column({ isPrimary: true })

@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-export * from './src/enabled_relations.js'
 export * from './src/helpers/index.js'
+export * from './src/relation.js'
 export * from './src/vine_lucid.js'
 export * from './src/vine_model.js'

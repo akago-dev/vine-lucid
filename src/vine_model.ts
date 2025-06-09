@@ -15,9 +15,16 @@ import { VineModelSchemasInstallers } from './provider.js'
  * See `vine.lucid()`
  */
 export function VineModel<VineSchema extends BaseLiteralType<any, any, any>, M extends LucidModel>(
-  /** A vine schema to register. Use function to avoid circular dependencies issues. */
+  /**
+   * A vine schema to register.
+   * Use function to avoid circular dependencies issues.
+   */
   schema: VineSchema | (() => VineSchema) | any,
-  /** In cases of a relation, the model is needed. Use function to avoid circular dependencies issues. */
+
+  /**
+   * In cases of a relation, the model is needed.
+   * Use function to avoid circular dependencies issues.
+   */
   model?: M | (() => any) | undefined
 ) {
   return function (target: any, propertyName: string) {
