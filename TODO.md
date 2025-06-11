@@ -1,4 +1,2 @@
-- Ajouter plus de tests
-- gérer les types secondary key
 - readme
 - publish npm

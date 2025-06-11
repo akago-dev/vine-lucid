@@ -125,7 +125,7 @@ const vineLucid = function <M extends LucidModel>(
     ...relationsProperties,
   }.exclude((v) => v === undefined)
 
-  const modelKeys: string[] = [model.primaryKey]
+  const modelKeys = getModelKeys(model)
 
   // Exclude
   const excludes: string[] = options?.update ? ((model as any).excludeFromUpdate ?? []) : []
@@ -168,7 +168,7 @@ const vineLucid = function <M extends LucidModel>(
   // ecepted if options.partial, in this cas every property is optional
   if (!options?.partial) {
     const pk = model.primaryKey
-    const sks = (model as any).secondaryKeys
+    const sks = getSecondaryKeys(model)
     if (sks?.length && Object.keys(properties).includesArray([pk, ...sks])) {
       if (pk in properties) properties[pk] = properties[pk].optional().requiredIfAnyMissing(sks)
       for (var sk of sks)
@@ -183,3 +183,23 @@ const vineLucid = function <M extends LucidModel>(
 }
 
 Vine.macro('lucid', vineLucid)
+
+/**
+ * We support the use of secondary keys (single field of tuple)
+ * If model has a `static secondaryKey : string | string[] | undefined`
+ * it will be merge with primary key and returned
+ */
+const getModelKeys = <M extends LucidModel>(model: M): string[] => {
+  return [model.primaryKey, ...getSecondaryKeys(model)]
+}
+
+const getSecondaryKeys = <M extends LucidModel>(model: M): string[] => {
+  const secondaryKey = (model as any).secondaryKey
+  if (typeof secondaryKey === 'string') {
+    return [secondaryKey]
+  } else if (Array.isArray(secondaryKey)) {
+    return secondaryKey
+  } else {
+    return []
+  }
+}

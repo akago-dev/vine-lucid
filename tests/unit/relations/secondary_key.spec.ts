@@ -13,7 +13,7 @@ import { test } from '@japa/runner'
 import vine from '@vinejs/vine'
 import { Relation, VineModel } from '../../../index.js'
 
-test('Relation | mutability assignOnly | update | secondaryKey', async () => {
+test('Relation | mutability assignOnly | update | secondaryKey', async ({ assert }) => {
   class ChildSecondary extends BaseModel {
     static excludeFromUpdate = ['childFieldA']
     static secondaryKey = 'childFieldB'
@@ -39,7 +39,7 @@ test('Relation | mutability assignOnly | update | secondaryKey', async () => {
     declare child: BelongsTo<typeof ChildSecondary>
   }
 
-  assertVineEquals(
+  assert.vine.equals(
     vine.lucid(ParentSecondary, {
       relations: [Relation.assignOnly('child')],
       update: true,
@@ -56,7 +56,7 @@ test('Relation | mutability assignOnly | update | secondaryKey', async () => {
   )
 })
 
-test('Relation | mutability assignOnly | update | secondaryKey', async () => {
+test('Relation | mutability assignOnly | update | secondaryKey', async ({ assert }) => {
   class ChildSecondary extends BaseModel {
     static excludeFromUpdate = ['childFieldA']
     static secondaryKey = 'childFieldB'
@@ -85,7 +85,7 @@ test('Relation | mutability assignOnly | update | secondaryKey', async () => {
     declare children: ManyToMany<typeof ChildSecondary>
   }
 
-  assertVineEquals(
+  assert.vine.equals(
     vine.lucid(ParentSecondary, {
       relations: [Relation.assignOnly('children')],
       update: true,
