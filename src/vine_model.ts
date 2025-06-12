@@ -9,7 +9,7 @@
 
 import { LucidModel } from '@adonisjs/lucid/types/model'
 import { BaseLiteralType } from '@vinejs/vine'
-import { VineModelSchemasInstallers } from './provider.js'
+import { VineModelSchemasInstallers } from '../providers/vine_lucid_provider.js'
 
 /**
  * See `vine.lucid()`

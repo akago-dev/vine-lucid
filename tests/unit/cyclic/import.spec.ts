@@ -10,7 +10,7 @@
 import { test } from '@japa/runner'
 import vine from '@vinejs/vine'
 import { Relation } from '../../../index.js'
-import VineModelProvider from '../../../src/provider.js'
+import VineLucidProvider from '../../../providers/vine_lucid_provider.js'
 import { ClassA } from './class_a.js'
 import { ClassB } from './class_b.js'
 
@@ -43,4 +43,4 @@ test('Relations', async ({ assert }) => {
         .nullable(),
     })
   )
-}).setup(new VineModelProvider().register)
+}).setup(new VineLucidProvider().register)

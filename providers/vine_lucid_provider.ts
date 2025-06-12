@@ -7,13 +7,13 @@
  * file that was distributed with this source code.
  */
 
+export const VineModelSchemasInstallers: (() => void)[] = []
+
 /** Definitely not the cleanest way to do it but
  * providers and dependency injection kick in too late
  * for `@VineModel()`
  */
-export const VineModelSchemasInstallers: (() => void)[] = []
-
-export default class VineModelProvider {
+export default class VineLucidProvider {
   async register() {
     VineModelSchemasInstallers.forEach((i) => i())
   }

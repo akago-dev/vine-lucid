@@ -1,5 +1,5 @@
 {
-  "name": "vine-lucid",
+  "name": "@akago/vine-lucid",
   "version": "0.1.0",
   "description": "Generate a vine schema based on a lucid model definition",
   "repository": {
@@ -26,10 +26,12 @@
   "files": [
     "build",
     "!build/bin",
-    "!build/tests"
+    "!build/tests",
+    "!build/.vscode"
   ],
   "exports": {
-    ".": "./build/index.js"
+    ".": "./build/index.js",
+    "./vine_lucid_provider": "./build/providers/vine_lucid_provider.js"
   },
   "scripts": {
     "lint": "eslint .",
@@ -38,10 +40,12 @@
     "precompile": "npm run lint && npm run clean",
     "compile": "tsup-node && tsc --emitDeclarationOnly --declaration",
     "build": "npm run compile",
+    "clean": "rm -rf ./build",
     "test:debug": "nodemon --watch ./ -e ts --exec \"node --loader ts-node/esm --inspect bin/test.ts \"",
     "test": "node --loader ts-node/esm --inspect bin/test.ts"
   },
-  "dependencies": {
+  "peerDependencies": {
+    "@adonisjs/assembler": "^7.8.2",
     "@adonisjs/lucid": "^21.6.1",
     "@vinejs/vine": "^3.0.1",
     "luxon": "^3.6.1"
@@ -60,10 +64,23 @@
     "prettier": "^3.5.3",
     "ts-node": "^10.9.2",
     "tslib": "^2.8.1",
+    "tsup": "^8.3.6",
     "typescript": "^5.8.3"
   },
   "eslintConfig": {
     "extends": "@adonisjs/eslint-config/package"
   },
-  "prettier": "@adonisjs/prettier-config"
+  "prettier": "@adonisjs/prettier-config",
+  "tsup": {
+    "entry": [
+      "./index.ts",
+      "./providers/vine_lucid_provider.ts"
+    ],
+    "outDir": "./build",
+    "clean": true,
+    "format": "esm",
+    "dts": false,
+    "sourcemap": true,
+    "target": "esnext"
+  }
 }

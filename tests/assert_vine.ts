@@ -9,7 +9,7 @@
 
 import { Assert } from '@japa/assert'
 import vine, { BaseModifiersType } from '@vinejs/vine'
-import assert from 'assert'
+import assert from 'node:assert'
 
 declare module '@japa/assert' {
   interface Assert {

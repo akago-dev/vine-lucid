@@ -10,6 +10,7 @@
 import { LucidModel } from '@adonisjs/lucid/types/model'
 import vine, { Vine, VineObject } from '@vinejs/vine'
 import type { NullableModifier } from '@vinejs/vine/schema/base/main'
+import './helpers/array.js'
 import { firstOrderPaths, subpathsObject, vineIsArray } from './helpers/index.js'
 import { Relation } from './relation.js'
 
@@ -90,7 +91,7 @@ const vineLucid = function <M extends LucidModel>(
   const relationsProperties = model.$relationsDefinitions.toObject().mapValues((v, k) => {
     // Keep only relation present in options.relations
     if (!optionsRelationsFirstOrderNames.includes(k)) return undefined
-    const optionRelation = (options?.relations ?? []).find((v) => v.name === k)
+    const optionRelation = (options?.relations ?? []).find((r) => r.name === k)
 
     // Remove readonly relations if update is true
     if (options?.update && optionRelation?.mutability === 'readOnly') return undefined
@@ -107,8 +108,8 @@ const vineLucid = function <M extends LucidModel>(
         relations: subpathsObject(
           options?.relations ?? [],
           k,
-          (v) => v.name,
-          (v, name) => v.copyWithName(name)
+          (r) => r.name,
+          (r, name) => r.copyWithName(name)
         ),
       }
       // Special case : relation is an "to-many"
