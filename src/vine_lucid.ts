@@ -11,7 +11,13 @@ import { LucidModel } from '@adonisjs/lucid/types/model'
 import vine, { Vine, VineObject } from '@vinejs/vine'
 import type { NullableModifier } from '@vinejs/vine/schema/base/main'
 import './helpers/array.js'
-import { firstOrderPaths, subpathsObject, vineIsArray } from './helpers/index.js'
+import {
+  firstOrderPaths,
+  objectExclude,
+  objectMapValues,
+  subpathsObject,
+  vineIsArray,
+} from './helpers/index.js'
 import { Relation } from './relation.js'
 
 export type VineLucidModelOptions = {
@@ -79,16 +85,18 @@ const vineLucid = function <M extends LucidModel>(
   model: M,
   options?: VineLucidModelOptions
 ): typeof options extends { null: true } ? VineLucidReturnNullable : VineLucidReturn {
-  const columnProperties = model.$columnsDefinitions
-    .toObject()
-    .mapValues((v) => (v as any).meta?.vine)
-  const computedProperties = model.$computedDefinitions
-    .toObject()
-    .mapValues((v) => (v as any).meta?.vine)
+  const columnProperties = objectMapValues(
+    model.$columnsDefinitions.toObject(),
+    (v) => (v as any).meta?.vine
+  )
+  const computedProperties = objectMapValues(
+    model.$computedDefinitions.toObject(),
+    (v) => (v as any).meta?.vine
+  )
 
   const optionsRelationsFirstOrderNames = firstOrderPaths(options?.relations ?? [], (v) => v.name)
 
-  const relationsProperties = model.$relationsDefinitions.toObject().mapValues((v, k) => {
+  const relationsProperties = objectMapValues(model.$relationsDefinitions.toObject(), (v, k) => {
     // Keep only relation present in options.relations
     if (!optionsRelationsFirstOrderNames.includes(k)) return undefined
     const optionRelation = (options?.relations ?? []).find((r) => r.name === k)
@@ -120,17 +128,20 @@ const vineLucid = function <M extends LucidModel>(
     }
   })
 
-  let properties: { [k: string]: any } = {
-    ...columnProperties,
-    ...(options?.update || options?.partial ? {} : computedProperties),
-    ...relationsProperties,
-  }.exclude((v) => v === undefined)
+  let properties: { [k: string]: any } = objectExclude(
+    {
+      ...columnProperties,
+      ...(options?.update || options?.partial ? {} : computedProperties),
+      ...relationsProperties,
+    },
+    (v) => v === undefined
+  )
 
   const modelKeys = getModelKeys(model)
 
   // Exclude
   const excludes: string[] = options?.update ? ((model as any).excludeFromUpdate ?? []) : []
-  properties = properties.exclude((_v, k) => {
+  properties = objectExclude(properties, (_v, k) => {
     switch (options?.primaryKey) {
       case undefined:
       case 'noop':
@@ -143,7 +154,7 @@ const vineLucid = function <M extends LucidModel>(
   })
 
   // Nullable
-  properties = properties.mapValues((v, k) =>
+  properties = objectMapValues(properties, (v, k) =>
     // Relations
     optionsRelationsFirstOrderNames.includes(k)
       ? // Nullify "to one" relations
@@ -160,7 +171,7 @@ const vineLucid = function <M extends LucidModel>(
 
   // Optional
   if (options?.partial || options?.update)
-    properties = properties.mapValues((v, k) =>
+    properties = objectMapValues(properties, (v, k) =>
       k === model.primaryKey && !options?.partial ? v : v.optional()
     )
 
