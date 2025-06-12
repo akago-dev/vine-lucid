@@ -1,4 +1,4 @@
-Declare vine properties validation in your lucid model. Generate object validators where it suits you.
+Declare (vine)[https://docs.adonisjs.com/guides/basics/validation] properties validation in your (lucid)[https://docs.adonisjs.com/guides/database/lucid] model. Generate object validators where it suits you.
 
 # Installation
 
@@ -7,8 +7,6 @@ node ace add @akago/vine-lucid
 ```
 
 This will notably install a provider needed to avoid cyclic imports.
-
-It will also make sure (lucid)[https://docs.adonisjs.com/guides/database/lucid#installation] and (vine)[https://docs.adonisjs.com/guides/basics/validation#configuring-vinejs] are installed.
 
 # Usage
 
@@ -23,12 +21,15 @@ export class Kid extends BaseModel {
   declare name: string
 }
 
-const schema = vine.lucid(Kid)
+const schema = vine.lucid(Kid, { update: true })
 const data = {
   name: 'John',
+  lastname: 'lennon',
 }
 
 const output = await vine.validate({ schema, data })
+
+this.logger.info(JSON.stringify(output))
 ```
 
 See tests for more advanced usage (including relations, cyclic imports, partial, update...)

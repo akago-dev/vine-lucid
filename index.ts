@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+export { configure } from './configure.js'
+export * from './src/helpers/index.js'
 export * from './src/relation.js'
 export * from './src/vine_lucid.js'
 export * from './src/vine_model.js'

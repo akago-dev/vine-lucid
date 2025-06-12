@@ -17,11 +17,6 @@ import ConfigureCommand from '@adonisjs/core/commands/configure'
 export async function configure(command: ConfigureCommand) {
   const codemods = await command.createCodemods()
 
-  await codemods.installPackages([
-    { name: 'vinejs', isDevDependency: false },
-    { name: '@adonisjs/lucid', isDevDependency: false },
-  ])
-
   await codemods.updateRcFile(async (rcFile) => {
     rcFile.addProvider('@akago/vine-lucid/vine_lucid_provider')
   })
