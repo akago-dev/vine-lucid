@@ -1,4 +1,4 @@
-Declare (vine)[https://docs.adonisjs.com/guides/basics/validation] properties validation in your (lucid)[https://docs.adonisjs.com/guides/database/lucid] model. Generate object validators where it suits you.
+Declare [vine](https://docs.adonisjs.com/guides/basics/validation) properties validation in your [lucid](https://docs.adonisjs.com/guides/database/lucid) model. Generate object validators where it suits you.
 
 # Installation
 
