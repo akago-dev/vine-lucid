@@ -1,24 +1,9 @@
-Business Source License 1.1
+# The MIT License
 
-Licensor: AKAGO SAS
-Product: Vine-lucid
-Initial License Date: 2025-06-05
-Change Date: 2035-06-05
-Change License: MIT
+Copyright 2022 Harminder Virk, contributors
 
-Terms:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The Licensed Work is provided under the terms of this Business Source License 1.1 (“BSL”), which is not an open source license. However, the Licensed Work will be made available under the Change License on the Change Date.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-Usage Limitation:
-You may use, copy, modify, and distribute the Licensed Work for any non-commercial purpose.
-Commercial use — including but not limited to offering the Licensed Work as a service, incorporating it into a commercial product, or selling it — is not permitted without the Licensor’s prior written permission.
-
-Change License:
-On the Change Date, the Licensed Work will automatically be relicensed under the Change License, and you may then use it under that license.
-
-Additional Terms:
-This license does not grant any patent rights.
-The Licensed Work is provided “as is”, without warranty or liability.
-
-For details, see https://mariadb.com/bsl11
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
