@@ -144,3 +144,18 @@ test('Nullable', async ({ assert }) => {
       .nullable()
   )
 })
+
+test('Array of strings', async ({ assert }) => {
+  class ClassA extends BaseModel {
+    @VineModel(vine.array(vine.string()))
+    @column()
+    declare fieldA: string[]
+  }
+
+  assert.vine.equals(
+    vine.lucid(ClassA),
+    vine.object({
+      fieldA: vine.array(vine.string()),
+    })
+  )
+})
