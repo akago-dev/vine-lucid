@@ -8,15 +8,16 @@
  */
 
 import { Assert } from '@japa/assert'
-import vine, { BaseModifiersType } from '@vinejs/vine'
+import vine from '@vinejs/vine'
+import { type ConstructableSchema } from '@vinejs/vine/types'
 import assert from 'node:assert'
 
 declare module '@japa/assert' {
   interface Assert {
     vine: {
       equals<Input, Output, CamelCaseOutput>(
-        schemaA: BaseModifiersType<Input, Output, CamelCaseOutput>,
-        schemaB: BaseModifiersType<Input, Output, CamelCaseOutput>
+        schemaA: ConstructableSchema<Input, Output, CamelCaseOutput>,
+        schemaB: ConstructableSchema<Input, Output, CamelCaseOutput>
       ): void
     }
   }
@@ -26,8 +27,8 @@ export const assertVine = () =>
   function () {
     Assert.macro('vine', {
       equals: function <Input, Output, CamelCaseOutput>(
-        schemaA: BaseModifiersType<Input, Output, CamelCaseOutput>,
-        schemaB: BaseModifiersType<Input, Output, CamelCaseOutput>
+        schemaA: ConstructableSchema<Input, Output, CamelCaseOutput>,
+        schemaB: ConstructableSchema<Input, Output, CamelCaseOutput>
       ): void {
         // We can't test equality of refs as they contain functions
         // So we just make sure their names match

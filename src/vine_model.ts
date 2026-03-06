@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-import { LucidModel } from '@adonisjs/lucid/types/model'
-import { BaseLiteralType } from '@vinejs/vine'
+import { type LucidModel } from '@adonisjs/lucid/types/model'
+import { type BaseLiteralType } from '@vinejs/vine'
 import { VineModelSchemasInstallers } from '../providers/vine_lucid_provider.js'
 
 /**

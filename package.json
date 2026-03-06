@@ -52,32 +52,32 @@
     "test": "node --loader ts-node/esm --inspect bin/test.ts"
   },
   "dependencies": {
-    "@poppinss/macroable": "^1.0.4"
+    "@poppinss/macroable": "^1.1.0"
   },
   "peerDependencies": {
-    "@adonisjs/assembler": "^7.8.2",
-    "@adonisjs/lucid": "^21.6.1",
-    "@vinejs/vine": "^3.0.1",
-    "luxon": "^3.6.1"
+    "@adonisjs/assembler": "^8.0.0",
+    "@adonisjs/lucid": "^22.0.0",
+    "@vinejs/vine": "^4.3.0",
+    "luxon": "^3.7.1"
   },
   "devDependencies": {
-    "@adonisjs/core": "^6.12.1",
-    "@adonisjs/eslint-config": "^2.1.0",
+    "@adonisjs/core": "^7.0.1",
+    "@adonisjs/eslint-config": "^3.0.0",
     "@adonisjs/prettier-config": "^1.4.5",
-    "@adonisjs/tsconfig": "^1.4.1",
-    "@japa/assert": "^4.0.1",
-    "@japa/expect-type": "^2.0.3",
-    "@japa/runner": "^4.2.0",
-    "@swc/core": "^1.11.31",
-    "@types/node": "^22.15.30",
-    "del-cli": "^6.0.0",
-    "nodemon": "^3.1.10",
-    "prettier": "^3.5.3",
-    "release-it": "^19.0.1",
+    "@adonisjs/tsconfig": "^2.0.0",
+    "@japa/assert": "^4.2.0",
+    "@japa/expect-type": "^2.0.4",
+    "@japa/runner": "^5.3.0",
+    "@swc/core": "^1.15.18",
+    "@types/node": "^25.3.5",
+    "del-cli": "^7.0.0",
+    "nodemon": "^3.1.14",
+    "prettier": "^3.8.1",
+    "release-it": "^19.2.4",
     "ts-node": "^10.9.2",
     "tslib": "^2.8.1",
-    "tsup": "^8.3.6",
-    "typescript": "^5.8.3"
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
   },
   "eslintConfig": {
     "extends": "@adonisjs/eslint-config/package"

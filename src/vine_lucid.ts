@@ -7,9 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import { LucidModel } from '@adonisjs/lucid/types/model'
-import vine, { Vine, VineObject } from '@vinejs/vine'
+import { type LucidModel } from '@adonisjs/lucid/types/model'
+import vine, { Vine } from '@vinejs/vine'
 import type { NullableModifier } from '@vinejs/vine/schema/base/main'
+import { type ConstructableSchema } from '@vinejs/vine/types'
 import './helpers/array.js'
 import {
   firstOrderPaths,
@@ -18,7 +19,7 @@ import {
   subpathsObject,
   vineIsArray,
 } from './helpers/index.js'
-import { Relation } from './relation.js'
+import { type Relation } from './relation.js'
 
 export type VineLucidModelOptions = {
   /**
@@ -55,7 +56,7 @@ export type VineLucidModelOptions = {
   relations?: Relation[]
 }
 
-type VineLucidReturn = VineObject<any, any, any, any>
+type VineLucidReturn = ConstructableSchema<any, any, any>
 type VineLucidReturnNullable = VineLucidReturn | NullableModifier<VineLucidReturn>
 
 declare module '@vinejs/vine' {
@@ -161,19 +162,25 @@ const vineLucid = function <M extends LucidModel>(
         !vineIsArray(v) ||
         // Nullify "to many" relations in update is true
         options?.update
-        ? v.nullable()
+        ? v.allowNull
+          ? v
+          : v.nullable()
         : v
       : // Fields
         options?.null || (options?.update && !modelKeys.includes(k))
-        ? v.nullable()
+        ? v.allowNull
+          ? v
+          : v.nullable()
         : v
   )
 
   // Optional
   if (options?.partial || options?.update)
-    properties = objectMapValues(properties, (v, k) =>
-      k === model.primaryKey && !options?.partial ? v : v.optional()
-    )
+    properties = objectMapValues(properties, (v, k) => {
+      if (k === model.primaryKey && !options?.partial) return v
+      else if (v.isOptional) return v
+      else return v.optional()
+    })
 
   // Secondary key(s) optionality
   // We want at least one of the primaryKey or the secondaryKey(s) to be set
@@ -185,7 +192,8 @@ const vineLucid = function <M extends LucidModel>(
       if (pk in properties) properties[pk] = properties[pk].optional().requiredIfAnyMissing(sks)
       for (var sk of sks)
         if (sk in properties) {
-          properties[sk] = properties[sk].optional().requiredIfMissing(pk)
+          const prop = properties[sk]
+          properties[sk] = (prop.isOptional ? prop : prop.optional()).requiredIfMissing(pk)
         }
     }
   }
