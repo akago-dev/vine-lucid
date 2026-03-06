@@ -8,9 +8,8 @@
  */
 
 import { type LucidModel } from '@adonisjs/lucid/types/model'
-import vine, { Vine } from '@vinejs/vine'
+import vine, { Vine, type VineObject } from '@vinejs/vine'
 import type { NullableModifier } from '@vinejs/vine/schema/base/main'
-import { type ConstructableSchema } from '@vinejs/vine/types'
 import './helpers/array.js'
 import {
   firstOrderPaths,
@@ -56,8 +55,7 @@ export type VineLucidModelOptions = {
   relations?: Relation[]
 }
 
-type VineLucidReturn = ConstructableSchema<any, any, any>
-type VineLucidReturnNullable = VineLucidReturn | NullableModifier<VineLucidReturn>
+type VineLucidReturn = VineObject<any, any, any, any>
 
 declare module '@vinejs/vine' {
   interface Vine {
@@ -71,7 +69,7 @@ declare module '@vinejs/vine' {
     lucid<M extends LucidModel>(
       model: M,
       options?: VineLucidModelOptions
-    ): typeof options extends { null: true } ? VineLucidReturnNullable : VineLucidReturn
+    ): typeof options extends { null: true } ? NullableModifier<VineLucidReturn> : VineLucidReturn
   }
 }
 
@@ -85,7 +83,7 @@ declare module '@vinejs/vine' {
 const vineLucid = function <M extends LucidModel>(
   model: M,
   options?: VineLucidModelOptions
-): typeof options extends { null: true } ? VineLucidReturnNullable : VineLucidReturn {
+): typeof options extends { null: true } ? NullableModifier<VineLucidReturn> : VineLucidReturn {
   const columnProperties = objectMapValues(
     model.$columnsDefinitions.toObject(),
     (v) => (v as any).meta?.vine
