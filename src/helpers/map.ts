@@ -16,12 +16,13 @@ declare global {
   }
 }
 
-Object.defineProperty(Map.prototype, 'toObject', {
-  value: function <K extends string | number | symbol, V>(this: Map<K, V>): Record<K, V> {
-    const obj: Partial<Record<K, V>> = {}
-    for (const [key, value] of this.entries()) {
-      obj[key] = value
-    }
-    return obj as Record<K, V>
-  },
-})
+if (!Map.prototype.toObject)
+  Object.defineProperty(Map.prototype, 'toObject', {
+    value: function <K extends string | number | symbol, V>(this: Map<K, V>): Record<K, V> {
+      const obj: Partial<Record<K, V>> = {}
+      for (const [key, value] of this.entries()) {
+        obj[key] = value
+      }
+      return obj as Record<K, V>
+    },
+  })
