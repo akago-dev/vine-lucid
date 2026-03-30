@@ -1,6 +1,6 @@
 {
   "name": "@akago/vine-lucid",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Generate a vine schema based on a lucid model definition",
   "publishConfig": {
     "access": "public",
